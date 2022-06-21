@@ -8,7 +8,7 @@ export async function ReadingAnime(page: number) {
     try {
 
         const massThisPageAnime: Card[] = [];
-        const response = await fetch(`https://api.jikan.moe/v4/anime?page=${page}&limit=30`, {
+        const response = await fetch(`https://api.jikan.moe/v4/anime?page=${page}&limit=30&score=0`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
