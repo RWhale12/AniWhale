@@ -1,0 +1,30 @@
+.anime-card{
+    width: 200px;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(209, 206, 206);
+    margin: 20px;
+
+    &:hover{
+        box-shadow:0 0 2px rgb(40, 40, 40);
+        // background-color:rgba(0,0,0,.3);
+        
+    }
+
+    // &__name{
+    //         font-size: 16px;
+    //         font-weight: 500;
+    //         margin-top: 10px;
+    //     }
+
+    &__image{
+        width: 200px;
+        height: 270px;
+        object-fit: cover;
+    }
+
+    
+}

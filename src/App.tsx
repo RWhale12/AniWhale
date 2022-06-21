@@ -1,26 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { ReadingAnime } from './actions/readingApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { InputType } from 'zlib';
+import { fetchCard } from './redux/slices';
+import { createModuleResolutionCache } from 'typescript';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { AnimeCard } from './components/AnimeCard';
 
 function App() {
+  const selector = useAppSelector(state => state.cardSliceReduser.content)
+  const dispatch = useAppDispatch();
+
+  function toggle() {
+    const page = (document.querySelector('.input-page') as HTMLInputElement).value;
+    const infoPage = ReadingAnime(Number(page))
+      .then(anime => {
+        if (anime)
+          dispatch(fetchCard(anime))
+        console.log(anime)
+      });
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input className='input-page'></input>
+      <button onClick={() => toggle()}>GO</button>
+      <div className='anime'>
+        {selector && selector.map(el => {
+          return <AnimeCard name={el.name} id={el.id} image={el.image}/>
+        })}
+      </div>
     </div>
   );
+
 }
 
 export default App;
