@@ -30,7 +30,7 @@ function App() {
       <button onClick={() => toggle()}>GO</button>
       <div className='anime'>
         {selector && selector.map(el => {
-          return <AnimeCard name={el.name} id={el.id} image={el.image} rating={el.rating}/>
+          return <AnimeCard name={el.name} id={el.id} image={el.image} rating={el.rating} genres={el.genres}/>
         })}
       </div>
     </div>

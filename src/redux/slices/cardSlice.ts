@@ -7,6 +7,7 @@ export type Card = {
     type: string;
     episodes: number;
     rating: number;
+    genres: [];
 }
 
 interface ICardState {

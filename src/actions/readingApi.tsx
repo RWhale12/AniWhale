@@ -28,6 +28,7 @@ export async function ReadingAnime(page: number) {
                     id: anime.mal_id,
                     image: anime.images.jpg.large_image_url,
                     rating: anime.score,
+                    genres: anime.genres.map((el: any) => el.name)
                 })
             })
             return massThisPageAnime;
