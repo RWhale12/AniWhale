@@ -7,7 +7,7 @@ import { LeftMenu } from './components/LeftMenu';
 function App() {
   return (
     <div className="App">
-      HEllo
+      
     </div>
   );
 }
