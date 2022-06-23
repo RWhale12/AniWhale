@@ -25,7 +25,7 @@
         height: 50px;
         padding: 0 15px;
         outline: none;
-        background: rgb(195, 194, 194);
+        background: rgb(198 198 198);
         margin: 10px 0;
     }
 
@@ -40,10 +40,10 @@
         width: 200px;
         height: 40px;
         border: none;
-        border-radius: 20px;
-        background: blue;
+        border-radius: 25px;
+        background-color: rgba($color: blue, $alpha: 0.9);
         color: #fff;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         margin: 15px 0;
 

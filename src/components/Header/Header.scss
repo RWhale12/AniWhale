@@ -1,12 +1,12 @@
 .header {
-    // margin: 20px 0 0 0;
-    padding: 20px 0 0 0;
+    background: rgba($color: #fff, $alpha: 0.8);
     width: 100%;
-    height: 80px;
-
+    height: 110px;
+    box-shadow: 0 0 15px gray;
     display: flex;
     align-items: center;
-    // justify-content: space-between;
+    position: relative;
+    z-index: 5;
 
     &--logo {
         width: 350px;
@@ -34,7 +34,8 @@
         font-size: 20px;
         font-weight: 500;
         border: none;
-        background: #5271ff;
+        // background: #5271ff;
+        background-color: rgba($color: blue, $alpha: 0.8);
         color: white;
         transition: transform .2s;
 

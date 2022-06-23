@@ -12,6 +12,7 @@ import year from '../../icons/menu-year.png'
 export const LeftMenu = () => {
     return(
         <div className='left-menu'>
+            <div className='left-menu-bg'></div>
             <ButtonLeftMenu text='All Anime' icon={all}/>
             <ButtonLeftMenu text='New' icon={news}/>
             <ButtonLeftMenu text='Ongoings' icon={ongoing}/>

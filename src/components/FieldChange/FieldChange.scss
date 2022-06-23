@@ -17,7 +17,7 @@
         height: 600px;
         position: absolute;
         background: blue;
-        opacity: 0.7;
+        opacity: 0.8;
         z-index: -1;
     }
 
@@ -43,11 +43,11 @@
 
     &--button {
         width: 200px;
-        border-radius: 20px;
+        border-radius: 25px;
         border: 1px solid #ffffff;
         background: transparent;
         color: #fff;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         padding: 12px 45px;
         transition: transform .2s;

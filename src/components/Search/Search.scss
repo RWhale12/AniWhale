@@ -19,6 +19,7 @@
         font-weight: 400;
         border-bottom: 1px solid gray;
         outline: none;
+        background: rgba($color: #fff, $alpha: 0);
     }
 
     &-button{
@@ -28,7 +29,8 @@
         font-size: 20px;
         font-weight: 500;
         border: none;
-        background: #5271ff;
+        // background: #5271ff;
+        background-color: rgba($color: blue, $alpha: 0.8);
         color:white;
         transition: transform .2s;
         

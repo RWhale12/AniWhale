@@ -1,5 +1,18 @@
-.left-menu{
-    width: 350px;
+.left-menu {
+    width: 320px;
+    height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
+    position: fixed;
+    z-index: 0;
+    object-fit: cover;
+    background-image: url('../../image/leftmenubg.jpg');
+
+    &-bg {
+        position: absolute;
+        width: 320px;
+        height: calc(100vh - 110px);
+        background-color: rgba($color: blue, $alpha: 0.8);
+        z-index: -1;
+    }
 }
