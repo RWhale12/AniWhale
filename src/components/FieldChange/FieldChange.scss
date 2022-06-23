@@ -42,14 +42,19 @@
     }
 
     &--button {
-        width: 150px;
+        width: 200px;
         border-radius: 20px;
         border: 1px solid #ffffff;
         background: transparent;
         color: #fff;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: bold;
         padding: 12px 45px;
+        transition: transform .2s;
+
+        &:hover{
+            transform: scale(1.1);
+        }
     }
 }
 
