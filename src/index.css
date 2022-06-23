@@ -17,6 +17,16 @@ body {
   opacity: 0.1;
 }
 
+html{
+  width: 100%;
+}
+
+.root{
+  background: gray;
+  /* width: 80%; */
+}
+
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
