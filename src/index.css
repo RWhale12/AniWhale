@@ -5,6 +5,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+}
+
+.bg{
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('./image/bg.jpg');
+  background-size: cover;
+  opacity: 0.1;
 }
 
 code {
