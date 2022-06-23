@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FieldChange } from '../FieldChange';
-import { SingIn } from '../SingIn';
+import { SingIn, SingUp } from '../SingInAndUp';
 import './PanelSing.scss'
 
 type PanelSingProps = {
@@ -32,7 +32,7 @@ export const PanelSing = () => {
     return (
         <div className='sing'>
             <SingIn />
-            <SingIn />
+            <SingUp />
             <FieldChange buttonClick={changeField} tittle={tittle} text={textField} textButton={textButton}/>
         </div>
     )
