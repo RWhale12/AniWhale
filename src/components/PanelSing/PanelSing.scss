@@ -1,0 +1,58 @@
+.sing {
+    width: 1000px;
+    height: 600px;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+
+    &-field {
+        width: 500px;
+    }
+
+    &-change-field {
+        position: absolute;
+        z-index: 2;
+        height: 600px;
+        background: blue;
+        color:white;
+
+        transition: transform .4s;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &--div-text{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+
+        &--title{
+            font-size: 40px;
+            font-weight: 800;
+        }
+
+        &--text{
+            margin: 30px 0;
+            width: 400px;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        &--button {
+            border-radius: 20px;
+            border: 1px solid #ffffff;
+            background: transparent;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+        }
+    }
+
+}
+
+.panel-active {
+    transform: translate(500px, 0);
+}
