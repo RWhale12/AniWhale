@@ -20,8 +20,8 @@ function App() {
       <Header />
       <LeftMenu />
       <div className='App-children'>
-        <PanelSing />
-        <WritingAnime />
+        {/* <PanelSing /> */}
+        {/* <WritingAnime /> */}
       </div>
     </div>
   );
