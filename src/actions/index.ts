@@ -1,0 +1,1 @@
+export {ReadingAnime} from './readingApi'

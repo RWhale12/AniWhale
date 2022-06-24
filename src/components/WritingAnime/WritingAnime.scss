@@ -1,0 +1,11 @@
+.animes-div {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.anime{
+    margin: 20px 0 0 0;
+    padding: 20px;
+    background-color: rgba($color: white, $alpha: 0.4);
+    box-shadow: 3px 3px 15px gray;
+}

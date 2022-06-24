@@ -15,7 +15,8 @@ body {
   background-image: url('./image/bg.jpg');
   background-size: cover;
   opacity: 0.1;
-  z-index: -1;
+  /* z-index: -1; */
+  position: fixed;
 }
 
 html{
