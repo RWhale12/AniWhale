@@ -1,0 +1,110 @@
+.afisha-popular {
+    width: 65%;
+    height: 500px;
+    background-image: url('https://pbs.twimg.com/profile_banners/455923363/1463479131/1500x500');
+    box-shadow: 3px 3px 15px gray;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--bg {
+        position: absolute;
+        width: 65%;
+        height: 500px;
+        background-color: rgba($color: blue, $alpha: 0.8);
+    }
+
+    &--animes {
+        width: 63%;
+        height: 420px;
+        background-color: rgba($color: white, $alpha: 0.5);
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+
+        &-animation {
+            transform: translateY(30%);
+            opacity: 0;
+            animation: aniTwo 6s forwards;
+            animation-iteration-count: infinite;
+
+            @keyframes aniTwo {
+                0% {
+                    transform: translateY(30%);
+                    opacity: 0;
+                }
+
+                10% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+        }
+    }
+
+
+
+    &--pages {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &--page {
+        margin: 10px 0 10px 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 1px;
+        background-color: rgba($color: white, $alpha: 0.3);
+        position: relative;
+
+        transition: transform .5s;
+
+        &-active {
+            background-color: rgba($color: white, $alpha: 0.9);
+            transform: scaleY(1.5);
+        }
+    }
+
+    &--text {
+        width: 25%;
+        margin: 0 10px;
+        color: rgba($color: white, $alpha: 0.9);
+        font-size: 50px;
+        font-weight: 800;
+
+        &-animation {
+            transform: translateY(-50%);
+            opacity: 0;
+            animation: ani 6s forwards;
+            animation-iteration-count: infinite;
+
+
+            @keyframes ani {
+                0% {
+                    transform: translateY(-50%);
+                    opacity: 0;
+                }
+
+                10% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

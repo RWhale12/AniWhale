@@ -1,1 +1,1 @@
-export { fetchCard } from './cardSlice' 
+export { fetchCardOutputAnime, fetchCardPopAnime } from './cardSlice' 

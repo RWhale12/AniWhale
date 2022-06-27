@@ -11,23 +11,28 @@ export type Card = {
 }
 
 interface ICardState {
-    content: Array<Card> | null;
+    contentPopAnime: Array<Card> | null;
+    contentOutputAnime: Array<Card> | null;
 }
 
 const initialState: ICardState = {
-    content: null,
+    contentPopAnime: null,
+    contentOutputAnime: null,
 }
 
 export const cardSlice = createSlice({
     name: 'card',
     initialState,
     reducers:{
-        fetchCard: (state, action: PayloadAction<Array<Card>>) => {
-            state.content = action.payload;
+        fetchCardPopAnime: (state, action: PayloadAction<Array<Card>>) => {
+            state.contentPopAnime = action.payload;
+        },
+        fetchCardOutputAnime: (state, action: PayloadAction<Array<Card>>) => {
+            state.contentOutputAnime = action.payload;
         },
     }
 })
 
-export const { fetchCard } = cardSlice.actions;
+export const { fetchCardPopAnime, fetchCardOutputAnime } = cardSlice.actions;
 
 export default cardSlice.reducer;

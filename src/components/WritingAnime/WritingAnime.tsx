@@ -1,32 +1,43 @@
+import { useEffect, useState } from "react";
 import { ReadingAnime } from "../../actions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { fetchCard } from "../../redux/slices";
+import { fetchCardOutputAnime } from "../../redux/slices";
 import { AnimeCard } from "../AnimeCard";
 import './WritingAnime.scss'
 
+type WritingAnimeProps = {
+    page: number;
+}
 
-
-export const WritingAnime = () => {
-    const selector = useAppSelector(state => state.cardSliceReduser.content)
+export const WritingAnime = (props:WritingAnimeProps) => {
+    const selector = useAppSelector(state => state.cardSliceReduser.contentOutputAnime)
     const dispatch = useAppDispatch();
+    const [page, setPage] = useState(props.page);
+    const pages: number[] = [];
 
-    function toggle() {
-        const page = (document.querySelector('.input-page') as HTMLInputElement).value;
-        const infoPage = ReadingAnime(Number(page))
-            .then(anime => {
-                if (anime)
-                    dispatch(fetchCard(anime))
-                console.log(anime)
-            });
-    }
+    useEffect(() => {
+        // const timerAnime = setTimeout(() => {
+            const infoPage = ReadingAnime(page, 30, 'score=8')
+                .then(anime => {
+                    if (anime)
+                        dispatch(fetchCardOutputAnime(anime))
+                });
+        // }, 1000)
+        // return () => {clearTimeout(timerAnime)}
+    }, [page]);
+
+    for(let i=0; i<=10; i++) pages[i] = i+1;
 
     return (
-        <div className="anime">
-            <input className='input-page'></input>
-            <button onClick={() => toggle()}>GO</button>
+        <div className="animes">
             <div className='animes-div'>
                 {selector && selector.map(el => {
                     return <AnimeCard name={el.name} id={el.id} image={el.image} rating={el.rating} genres={el.genres} />
+                })} 
+            </div>
+            <div className="animes--pages-buttons">
+                {pages.map((page) => {
+                    return <div className="animes--number-page" onClick={() => setPage(page)}>{page}</div>
                 })}
             </div>
         </div>

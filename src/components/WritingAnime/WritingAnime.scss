@@ -1,11 +1,35 @@
-.animes-div {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-}
-
-.anime{
+.animes{
     margin: 20px 0 0 0;
-    padding: 20px;
+    width: 65%;
     background-color: rgba($color: white, $alpha: 0.4);
     box-shadow: 3px 3px 15px gray;
+
+    &--number-page{
+        width: 50px;
+        height: 50px;
+        background-color: rgba($color: blue, $alpha: 0.6);
+        color: white;
+        margin: 0 5px;
+        font-size: 18px;
+        font-weight: 600;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover{
+            background-color: rgba($color: blue, $alpha: 0.9);
+        }
+    }
+
+    &--pages-buttons{
+        margin: 30px 0 20px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-div {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
 }

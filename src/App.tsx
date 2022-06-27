@@ -7,21 +7,34 @@ import { PanelSing } from './components/PanelSing';
 import { ReadingAnime } from './actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { InputType } from 'zlib';
-import { fetchCard } from './redux/slices';
+import { fetchCardPopAnime } from './redux/slices';
 import { createModuleResolutionCache } from 'typescript';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { AnimeCard } from './components/AnimeCard';
 import { WritingAnime } from './components/WritingAnime';
+import { AfishaPopular } from './components/AfishaPopular';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    ReadingAnime(1, 15,'type=tv&score=8&start_date=2017').then(anime => {
+        if (anime)
+            dispatch(fetchCardPopAnime(anime))
+        console.log(anime)
+    });
+}, []);
 
   return (
     <div className="App">
+
       <Header />
       <LeftMenu />
       <div className='App-children'>
         {/* <PanelSing /> */}
-        {/* <WritingAnime /> */}
+
+        <AfishaPopular />
+        <WritingAnime page={2} />
       </div>
     </div>
   );
@@ -29,3 +42,5 @@ function App() {
 }
 
 export default App;
+
+
