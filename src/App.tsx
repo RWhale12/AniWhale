@@ -13,29 +13,25 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { AnimeCard } from './components/AnimeCard';
 import { WritingAnime } from './components/WritingAnime';
 import { AfishaPopular } from './components/AfishaPopular';
+import { PageHome } from './routes/PageHome';
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    ReadingAnime(1, 15,'type=tv&score=8&start_date=2017').then(anime => {
-        if (anime)
-            dispatch(fetchCardPopAnime(anime))
-        console.log(anime)
+    ReadingAnime(1, 15, 'type=tv&score=8&start_date=2017').then(anime => {
+      if (anime)
+        dispatch(fetchCardPopAnime(anime))
+      console.log(anime)
     });
-}, []);
+  }, []);
 
   return (
     <div className="App">
 
       <Header />
       <LeftMenu />
-      <div className='App-children'>
-        {/* <PanelSing /> */}
-
-        <AfishaPopular />
-        <WritingAnime page={2} />
-      </div>
+          <PageHome />
     </div>
   );
 
