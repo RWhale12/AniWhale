@@ -49,7 +49,7 @@ export const AfishaPopular = () => {
             <div className='afisha-popular--bg'></div>
             <div className='afisha-popular--animes'>
                 {selector && subarray[tape].map(el => {
-                    return <AnimeCard name={el.name} id={el.id} image={el.image} rating={el.rating} genres={el.genres} />
+                    return <AnimeCard name={el.name} id={el.id} image={el.image} score={el.score} genres={el.genres} year={el.realeseYear} rating={el.rating}/>
                 })}
             </div>
             <label htmlFor="" className='afisha-popular--text'>{textTape[tape]}</label>

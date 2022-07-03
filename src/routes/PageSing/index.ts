@@ -1,0 +1,1 @@
+export {PageSing} from './PageSing'

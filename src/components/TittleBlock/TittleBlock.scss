@@ -1,0 +1,34 @@
+.tittle-block {
+    background-image: url('../../image/tittleBlockBg.jpg');
+    object-fit: cover;
+    width: 65%;
+    height: 250px;
+    color: white;
+    box-shadow: 3px 3px 15px gray;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    z-index: -2;
+
+    &--bg {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 250px;
+        background-color: rgba($color: blue, $alpha: 0.8);
+    }
+
+    &--tittle {
+        font-size: 50px;
+        font-weight: 900;
+        padding-left: 50px;
+    }
+
+    &--text {
+        font-size: 18px;
+        padding-left: 50px;
+    }
+}
