@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './AnimeCard.scss'
-
+import '../../components/Animation.scss'
 import markNotCheked from '../../icons/markNotCheked.png'
 import markCheked from '../../icons/markCheked.png'
 import { Link } from 'react-router-dom';
-import { fetchIdGenres } from '../../redux/slices';
 import { useAppDispatch } from '../../redux/hooks';
 
 
@@ -50,7 +49,7 @@ export const AnimeCard = (props: CardProps) => {
                     <label className='anime-card__image-hover--name'>{props.name}</label>
                     <div className='anime-card__image-hover--div-genres'>
                         {props.genres.map(genres => {
-                            return <Link to={`/genres/${genres.name}/${genres.id}`} onClick={() => dispatch(fetchIdGenres(genres.id))}>
+                            return <Link to={`/genres/${genres.name}/${genres.id}`}>
                                 <div className='anime-card__image-hover--genres'>{genres.name}</div>
                             </Link>
 

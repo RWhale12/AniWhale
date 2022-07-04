@@ -10,6 +10,8 @@
     transition: transform .2s;
     box-shadow: 0 0 10px gray;
 
+    animation: ani 1s forwards;
+
     &:hover {
         transform: scale(1.08);
     }
@@ -39,7 +41,7 @@
             justify-content: space-between;
             align-items: center;
 
-            &--children{
+            &--children {
                 display: flex;
             }
         }
@@ -59,6 +61,7 @@
             justify-content: center;
             align-items: center;
         }
+
         &--button {
             margin-left: 10px;
 

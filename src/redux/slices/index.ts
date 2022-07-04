@@ -1,1 +1,1 @@
-export { fetchCardOutputAnime, fetchCardPopAnime, fetchCountPages, fetchIdGenres } from './cardSlice' 
+export { fetchCardOutputAnime, fetchCardPopAnime, fetchCountPages, fetchSpecificAnime } from './cardSlice' 

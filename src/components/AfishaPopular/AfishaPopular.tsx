@@ -5,10 +5,6 @@ import { Card, fetchCardPopAnime } from '../../redux/slices/cardSlice';
 import { AnimeCard } from '../AnimeCard';
 import { ReadingAnime } from '../../actions';
 
-type AfishaPopularProps = {
-
-}
-
 export const AfishaPopular = () => {
     const selector = useAppSelector(state => state.cardSliceReduser.contentPopAnime)
     const dispatch = useAppDispatch();
