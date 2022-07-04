@@ -31,7 +31,7 @@ function App() {
 
       <Header />
       <LeftMenu />
-          <PageHome />
+          <PanelSing />
     </div>
   );
 
