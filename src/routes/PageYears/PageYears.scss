@@ -1,0 +1,31 @@
+.all-years {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    justify-items: center;
+
+    &--year {
+        margin: 15px 25px;
+        width: 300px;
+        height: 150px;
+        background-color: rgba($color: blue, $alpha: 0.8);
+        box-shadow: 0 0 10px black;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: white;
+        font-size: 30px;
+        font-weight: 900;
+        
+
+        transition: transform .2s;
+
+        &:hover{
+            background-color: rgba($color: blue, $alpha: 0.6);
+            transform: scale(1.1);
+        }
+    }
+}

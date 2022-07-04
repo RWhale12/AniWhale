@@ -10,6 +10,8 @@
     transition: transform .2s;
     box-shadow: 0 0 10px gray;
 
+    animation: ani 1s forwards;
+
     &:hover {
         transform: scale(1.08);
     }
@@ -34,14 +36,38 @@
 
         &--top-div {
             width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &--children {
+                display: flex;
+            }
+        }
+
+        &--info {
+            background: rgba($color: white, $alpha: 0.3);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            border: 1px solid #fff;
+            border-radius: 50px;
+            padding: 0 10px;
+            height: 30px;
+            margin-right: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         &--button {
-            margin: 10px;
+            margin-left: 10px;
 
             &-like {
-                width: 35px;
-                height: 35px;
+                width: 34px;
+                height: 34px;
                 object-fit: cover;
                 transition: transform .2s;
                 position: relative;
@@ -92,11 +118,11 @@
         }
 
         &--rating {
-            width: 50px;
+            padding: 0 15px;
             height: 30px;
             background-color: rgba(77, 186, 77, 0.8);
             color: white;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             border-radius: 50px;
             margin: 10px 0 25px 0;

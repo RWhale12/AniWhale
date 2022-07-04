@@ -13,13 +13,13 @@ export const LeftMenu = () => {
     return(
         <div className='left-menu'>
             <div className='left-menu-bg'></div>
-            <ButtonLeftMenu text='All Anime' icon={all}/>
-            <ButtonLeftMenu text='New' icon={news}/>
-            <ButtonLeftMenu text='Ongoings' icon={ongoing}/>
-            <ButtonLeftMenu text='Top 100 Anime' icon={top}/>
-            <ButtonLeftMenu text='Anime by genre' icon={ganres}/>
-            <ButtonLeftMenu text='Anime by year' icon={year}/>
-            <ButtonLeftMenu text='Multiseries' icon={multi}/>
+            <ButtonLeftMenu text='Home' icon={all} link='/'/>
+            <ButtonLeftMenu text='New' icon={news} link='/new'/>
+            <ButtonLeftMenu text='Top 100 Anime' icon={top} link='/top'/>
+            <ButtonLeftMenu text='Ongoings' icon={ongoing} link='/ongoing'/>
+            <ButtonLeftMenu text='Multiseries' icon={multi} link='/episodes'/>
+            <ButtonLeftMenu text='Anime by genre' icon={ganres} link='/genres'/>
+            <ButtonLeftMenu text='Anime by year' icon={year} link='/years'/>
         </div>
     )
 }

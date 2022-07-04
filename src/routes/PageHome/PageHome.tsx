@@ -6,7 +6,7 @@ export const PageHome = () => {
     return (
         <div className='App-children'>
             <AfishaPopular />
-            <WritingAnime page={1} url='&score=8' filters />
+            <WritingAnime page={1} url='order_by=members&sort=desc' filters />
         </div>
     )
 }
