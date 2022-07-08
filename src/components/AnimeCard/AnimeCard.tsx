@@ -18,28 +18,13 @@ type CardProps = {
 }
 
 export const AnimeCard = (props: CardProps) => {
-    const dispatch = useAppDispatch();
-    const [chekedMark, setChekedMark] = useState(markNotCheked);
-
-    function changingIcon() {
-        if (chekedMark === markNotCheked) {
-            setChekedMark(markCheked);
-        } else if (chekedMark === markCheked) {
-            setChekedMark(markNotCheked)
-        }
-    }
-
-
     return (
-        <Link to={`/anime/${props.id}`}>
-            <div className='anime-card' >
+        // <Link to={`/anime/${props.id}`}>
+            <div className='anime-card' onClick={() => {window.location.assign(`/anime/${props.id}`)}} >
                 <div className='div-info'></div>
                 <img className='anime-card__image' src={props.image} alt="" ></img>
                 <div className='anime-card__image-hover'>
                     <div className='anime-card__image-hover--top-div'>
-                        <div className='anime-card__image-hover--button anime-card__image-hover--button-like'>
-                            <img src={chekedMark} onClick={() => changingIcon()} alt="" className='anime-card__image-hover--button-like' />
-                        </div>
                         <div className='anime-card__image-hover--top-div--children'>
                             {props.rating && <div className='anime-card__image-hover--info'>{props.rating.split(' ')[0]}</div>}
                             <div className='anime-card__image-hover--info'>{props.year}</div>
@@ -58,6 +43,6 @@ export const AnimeCard = (props: CardProps) => {
                     {!props.rating && <div className='anime-card__image-hover--rating'>no score</div>}
                 </div>
             </div>
-        </Link>
+        // </Link>
     )
 }

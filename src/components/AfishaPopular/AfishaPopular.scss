@@ -85,11 +85,11 @@
         &-animation {
             transform: translateY(-50%);
             opacity: 0;
-            animation: ani 6s forwards;
+            animation: aniOne 6s forwards;
             animation-iteration-count: infinite;
 
 
-            @keyframes ani {
+            @keyframes aniOne {
                 0% {
                     transform: translateY(-50%);
                     opacity: 0;

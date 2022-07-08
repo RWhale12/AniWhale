@@ -11,9 +11,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        box-shadow: 3px 3px 5px gray;
+        transition: transform .2s;
 
         &:hover{
             background-color: rgba($color: blue, $alpha: 0.9);
+            transform: scale(1.1);
         }
 
         &-active{

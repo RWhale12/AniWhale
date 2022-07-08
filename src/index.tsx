@@ -7,17 +7,26 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 
 import * as firebase from 'firebase/app'
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCYB6Wbqws9qPIi7H-mGPcWC90mUz_9AS0",
-  authDomain: "aniwhale-e575a.firebaseapp.com",
-  projectId: "aniwhale-e575a",
-  storageBucket: "aniwhale-e575a.appspot.com",
-  messagingSenderId: "243382861993",
-  appId: "1:243382861993:web:c23a1372701dd49cc6e9b8"
+  apiKey: "AIzaSyCtwQdBUo1zn_U9utp0XfVQdrDo9DBNtZY",
+  authDomain: "aniwhaletest.firebaseapp.com",
+  projectId: "aniwhaletest",
+  storageBucket: "aniwhaletest.appspot.com",
+  messagingSenderId: "217976668367",
+  appId: "1:217976668367:web:6aac610deb453891f277ba"
 };
 
-firebase.initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+
+// export const db = initializeFirestore(app, {
+//   experimentalForceLongPolling: true,
+// });
+
+export const db = getFirestore(app);
 
 
 const root = ReactDOM.createRoot(

@@ -18,6 +18,7 @@ import { PageEpisodes } from './routes/PageEpisodes';
 import { PageGenres } from './routes/PageGenres';
 import { PageAnimeRefreshRender } from './routes/PageAnimeRefreshRender';
 import { PageYears } from './routes/PageYears';
+import { PageAccount } from './routes/PageAccount';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -69,6 +70,7 @@ function App() {
           <Route path='/years/:year' element={<PageYear />} ></Route>
           <Route path='/search/:search' element={<PageSearch />}></Route>
           <Route path='/anime/:id' element={<PageAnime />}></Route>
+          <Route path='/account' element={<PageAccount />}></Route>
           <Route path='*'
             element={
               <main>

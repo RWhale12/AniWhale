@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSpecificAnime } from '../../redux/slices';
 import { SpecificAnime } from '../../redux/slices/cardSlice';
 import './PageSpecificAnime.scss'
-import '../../components/Animaton.scss'
 
 
 type PageSpecificAnimeProps = {
@@ -76,6 +75,7 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                 <div className='specific-anime--content'>
                     <div className='specific-anime--content-children specific-anime--content-children-left'>
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
+                        {/* <button className='specific-anime--content-children-left--add-list'>add to list</button> */}
                         {/* <iframe src={`https://www.youtube.com/embed/${selectorAnime.trailer}`} className='specific-anime--content-children-left--trailer'></iframe> */}
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
