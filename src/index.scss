@@ -8,7 +8,7 @@ body {
 
 }
 
-.bg{
+.bg {
   position: absolute;
   width: 100%;
   min-height: 100vh;
@@ -18,11 +18,16 @@ body {
   position: fixed;
 }
 
-html{
+html {
   width: 100%;
 }
 
-.root{
+html,
+body {
+  height: 100%
+}
+
+.root {
   background: gray;
 }
 
@@ -34,10 +39,10 @@ code {
 
 @keyframes ani {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
 
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }

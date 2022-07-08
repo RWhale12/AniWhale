@@ -5,6 +5,7 @@ import { Account } from '../../components/Header/Header'
 import { addDoc, setDoc, collection, getFirestore, doc, getDoc, getDocFromCache } from "firebase/firestore";
 import { child, get, getDatabase, onValue, ref, set } from 'firebase/database';
 import { Loader } from '../../components/Loader';
+import { Footer } from '../../components/Footer';
 // import { db } from '../../index'
 
 
@@ -120,7 +121,6 @@ export const PageAccount = () => {
                 <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'none'}>close</button>
 
             </div>
-
         </div>
     )
 }
