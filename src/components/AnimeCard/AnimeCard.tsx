@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
 import './AnimeCard.scss'
 import '../../components/Animation.scss'
-import markNotCheked from '../../icons/markNotCheked.png'
-import markCheked from '../../icons/markCheked.png'
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../redux/hooks';
 
 
 type CardProps = {

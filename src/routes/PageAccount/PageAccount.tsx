@@ -1,9 +1,8 @@
-import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { HTMLInputTypeAttribute, useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import './PageAccount.scss'
 import { Account } from '../../components/Header/Header'
-import { addDoc, setDoc, collection, getFirestore, query, doc, getDoc, getDocFromCache, getDocs } from "firebase/firestore";
-import { child, get, getDatabase, onValue, ref, set } from 'firebase/database';
+import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs } from "firebase/firestore";
 import { Loader } from '../../components/Loader';
 import { Card } from '../../redux/slices/cardSlice';
 import { AnimeCard } from '../../components/AnimeCard';
@@ -41,7 +40,7 @@ export const PageAccount = () => {
     async function readingMyList() {
         let arrayAnimeProps: any = [];
         await getDocs(query(collection(db, `mylist-${auth.currentUser?.uid}`))).then((item) => {
-            if (item.size !== 0) {
+            if (item.size) {
                 item.forEach((doc) => {
                     arrayAnimeProps.push(doc.data());
                     console.log(doc.data())
@@ -141,6 +140,7 @@ export const PageAccount = () => {
 
             </div>
             <div className='animes'>
+                <label htmlFor="" className='mylist-tittle'>My list:</label>
                 {myList && myList.length > 0 && <div className='animes-div'>
                     {myList.map(el => {
                         return <AnimeCard name={el.name} id={el.id} image={el.image} score={el.score} genres={el.genres} year={el.realeseYear} rating={el.rating} />

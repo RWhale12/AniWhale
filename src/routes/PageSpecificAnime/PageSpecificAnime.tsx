@@ -1,16 +1,15 @@
 import { getAuth } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import { setDoc, doc, getDocs, deleteDoc } from 'firebase/firestore';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { pipeline } from 'stream';
 import { Character, ReadingSpecificAnime, ReadingSpecificAnimeCharacters, ReadingSpecificAnimePicAndVid, ReadingSpecificAnimeRelations, Relation, Relations } from '../../actions/readingApi';
 import { Loader } from '../../components/Loader';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSpecificAnime } from '../../redux/slices';
-import { SpecificAnime } from '../../redux/slices/cardSlice';
 import './PageSpecificAnime.scss'
 import { db } from '../../index'
+import { collection, query, where } from "firebase/firestore";
 
 
 type PageSpecificAnimeProps = {
@@ -25,8 +24,24 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
     const [arrayCharachters, setArrayCharacters] = useState<Array<Character>>();
     const [relations, setRelations] = useState<Array<any>>();
     const [images, setImages] = useState<Array<String>>();
+    const [checkedMyList, setChekedMyList] = useState<boolean>();
+
+
+    async function searchIdMyList() {
+        const mylist = collection(db, `mylist-${auth.currentUser?.uid}`);  
+        const querySnapshot = await getDocs(query(mylist, where("id", "==", props.id))).then((item) => {
+            if(item.size)
+            setChekedMyList(true)
+            else 
+            setChekedMyList(false)
+        });
+
+    }
+
 
     useEffect(() => {
+        searchIdMyList();
+
         dispatch(fetchSpecificAnime(null));
         const timerAnime = setTimeout(() => {
 
@@ -79,9 +94,15 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
             image: selectorAnime?.image,
             score: selectorAnime?.score,
             genres: selectorAnime?.genres,
-            year: selectorAnime?.realeseYear,
+            realeseYear: selectorAnime?.realeseYear,
             rating: selectorAnime?.rating,
         });
+        setChekedMyList(true)
+    }
+
+    async function deleteToDataBaseMyList() {
+        await deleteDoc(doc(db,  `mylist-${auth.currentUser?.uid}`, `${props.id}`));
+        setChekedMyList(false);
     }
 
     return (
@@ -91,8 +112,8 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                 <div className='specific-anime--content'>
                     <div className='specific-anime--content-children specific-anime--content-children-left'>
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
-                        <button className='specific-anime--content-children-left--add-list' onClick={() => writeToDataBaseMyList()}>add to list</button>
-
+                        {!checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => writeToDataBaseMyList()}>add to list</button>}
+                        {checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => deleteToDataBaseMyList()}>delete to list</button>}
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
                         <label htmlFor="" className='specific-anime--content-children-center--tittle'>{selectorAnime.tittle}</label>
