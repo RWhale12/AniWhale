@@ -9,10 +9,18 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 50px 0 0 0;
+  width: 100%;
+}
+
+.App-main-child{
+  margin: 30px 0 0 0;
+  width: 100%;
   position: absolute;
   z-index: 1;
-  width: 100%;
+  height: -webkit-calc(100vh - 140px);
+  display: grid;
+  justify-items: center;
+  align-content: space-between;
 }
 
 @keyframes ani {

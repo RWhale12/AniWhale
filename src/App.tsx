@@ -19,6 +19,7 @@ import { PageGenres } from './routes/PageGenres';
 import { PageAnimeRefreshRender } from './routes/PageAnimeRefreshRender';
 import { PageYears } from './routes/PageYears';
 import { PageAccount } from './routes/PageAccount';
+import { Footer } from './components/Footer';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -45,9 +46,9 @@ function App() {
     return <PageAnimeRefreshRender tittle={`Search By Request '${search.search}'`} url={`q=${search.search}`} />;
   }
 
-  function PageAnime(){
+  function PageAnime() {
     const idAnime = useParams();
-    return <PageAnimeRefreshRender animeID={Number(idAnime.id)}/>
+    return <PageAnimeRefreshRender animeID={Number(idAnime.id)} />
   }
 
 
@@ -57,28 +58,30 @@ function App() {
       <BrowserRouter>
         <Header />
         <LeftMenu />
-
-        <Routes>
-          <Route path='/' element={<PageHome />}></Route>
-          <Route path='/sing' element={<PageSing />}></Route>
-          <Route path='/top' element={<PageTop />}></Route>
-          <Route path='/new' element={<PageNew />}></Route>
-          <Route path='/ongoing' element={<PageOngoing />}></Route>
-          <Route path='/episodes' element={<PageEpisodes />}></Route>
-          <Route path='/genres/*' element={<PageGenres />}></Route>
-          <Route path='/genres/:name/:id' element={<PageGenre />} ></Route>
-          <Route path='/years/*' element={<PageYears />}></Route>
-          <Route path='/years/:year' element={<PageYear />} ></Route>
-          <Route path='/search/:search' element={<PageSearch />}></Route>
-          <Route path='/anime/:id' element={<PageAnime />}></Route>
-          <Route path='/account' element={<PageAccount />}></Route>
-          <Route path='*'
-            element={
-              <main>
-                <p>404 not found</p>
-              </main>
-            }></Route>
-        </Routes>
+        <div className='App-main-child'>
+          <Routes>
+            <Route path='/' element={<PageHome />}></Route>
+            <Route path='/sing' element={<PageSing />}></Route>
+            <Route path='/top' element={<PageTop />}></Route>
+            <Route path='/new' element={<PageNew />}></Route>
+            <Route path='/ongoing' element={<PageOngoing />}></Route>
+            <Route path='/episodes' element={<PageEpisodes />}></Route>
+            <Route path='/genres/*' element={<PageGenres />}></Route>
+            <Route path='/genres/:name/:id' element={<PageGenre />} ></Route>
+            <Route path='/years/*' element={<PageYears />}></Route>
+            <Route path='/years/:year' element={<PageYear />} ></Route>
+            <Route path='/search/:search' element={<PageSearch />}></Route>
+            <Route path='/anime/:id' element={<PageAnime />}></Route>
+            <Route path='/account' element={<PageAccount />}></Route>
+            <Route path='*'
+              element={
+                <main>
+                  <p>404 not found</p>
+                </main>
+              }></Route>
+          </Routes>
+          <Footer />
+        </div>
       </BrowserRouter>
     </div>
   );
