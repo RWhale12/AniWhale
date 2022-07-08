@@ -13,6 +13,7 @@ export const LeftMenu = () => {
     return(
         <div className='left-menu'>
             <div className='left-menu-bg'></div>
+            <div className='left-menu--account'></div>
             <ButtonLeftMenu text='Home' icon={all} link='/'/>
             <ButtonLeftMenu text='New' icon={news} link='/new'/>
             <ButtonLeftMenu text='Top 100 Anime' icon={top} link='/top'/>

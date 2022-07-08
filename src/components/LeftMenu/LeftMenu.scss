@@ -1,12 +1,13 @@
 .left-menu {
     width: 320px;
-    height: calc(100vh - 100px);
+    height: calc(100vh);
     display: flex;
     flex-direction: column;
     position: fixed;
     z-index: 2;
     object-fit: cover;
     background-image: url('../../image/leftmenubg.jpg');
+    margin-top: 110px;
 
     &-bg {
         position: absolute;

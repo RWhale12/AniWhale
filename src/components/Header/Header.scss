@@ -5,8 +5,8 @@
     box-shadow: 0 0 15px gray;
     display: flex;
     align-items: center;
-    position: relative;
-    z-index: 5;
+    position: fixed;
+    z-index: 2;
 
     &--logo {
         width: 350px;
@@ -39,7 +39,6 @@
         font-size: 20px;
         font-weight: 500;
         border: none;
-        // background: #5271ff;
         background-color: rgba($color: blue, $alpha: 0.8);
         color: white;
         transition: transform .2s;

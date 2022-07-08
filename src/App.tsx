@@ -50,6 +50,7 @@ function App() {
     return <PageAnimeRefreshRender animeID={Number(idAnime.id)}/>
   }
 
+
   return (
     <div className="App">
 
