@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
 import './AnimeCard.scss'
 import '../../components/Animation.scss'
-import markNotCheked from '../../icons/markNotCheked.png'
-import markCheked from '../../icons/markCheked.png'
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../redux/hooks';
 
 
 type CardProps = {
@@ -19,8 +15,8 @@ type CardProps = {
 
 export const AnimeCard = (props: CardProps) => {
     return (
-        // <Link to={`/anime/${props.id}`}>
-            <div className='anime-card' onClick={() => {window.location.assign(`/anime/${props.id}`)}} >
+        <Link to={`/anime/${props.id}`}>
+            <div className='anime-card' >
                 <div className='div-info'></div>
                 <img className='anime-card__image' src={props.image} alt="" ></img>
                 <div className='anime-card__image-hover'>
@@ -43,6 +39,6 @@ export const AnimeCard = (props: CardProps) => {
                     {!props.rating && <div className='anime-card__image-hover--rating'>no score</div>}
                 </div>
             </div>
-        // </Link>
+        </Link>
     )
 }

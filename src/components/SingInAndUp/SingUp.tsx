@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { SassColor } from 'sass';
 import validator from 'validator'
 import { getDatabase, set, ref } from "firebase/database";
+import { setDoc, doc } from 'firebase/firestore';
+import { db } from '../../index'
 
 
 
@@ -60,17 +62,26 @@ export const SingUp = (props: SingUnProps) => {
     }
 
     async function isReg(name: string) {
-        if (userData)
+        if (userData) {
             await createUserWithEmailAndPassword(auth, userData.email, userData.password).then((userCredential) => {
                 updateProfile(userCredential.user, {
                     displayName: name, photoURL: "https://example.com/jane-q-user/profile.jpg"
                 });
                 sendEmailVerification(userCredential.user);
+
             })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                 });
+
+            const docRef = await setDoc(doc(db, `users`, `${auth.currentUser?.uid}`), {
+                nickname: '',
+                country: '',
+                gender: '',
+                birthday: '',
+            });
+        }
     }
 
 

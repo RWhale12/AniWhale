@@ -1,11 +1,15 @@
-import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { HTMLInputTypeAttribute, useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 import './PageAccount.scss'
 import { Account } from '../../components/Header/Header'
-import { addDoc, setDoc, collection, getFirestore, doc, getDoc, getDocFromCache } from "firebase/firestore";
-import { child, get, getDatabase, onValue, ref, set } from 'firebase/database';
+import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs } from "firebase/firestore";
 import { Loader } from '../../components/Loader';
+<<<<<<< HEAD
 import { Footer } from '../../components/Footer';
+=======
+import { Card } from '../../redux/slices/cardSlice';
+import { AnimeCard } from '../../components/AnimeCard';
+>>>>>>> addList
 // import { db } from '../../index'
 
 
@@ -17,23 +21,41 @@ type AccountInfoDB = {
 }
 
 export const PageAccount = () => {
-    const refdb = ref(getDatabase());
     const db = getFirestore();
     const auth = getAuth();
     const [shortInfoAccount, setShortInfoAccount] = useState<Account>();
     const [longInfoAccount, setLongInfoAccount] = useState<AccountInfoDB>();
+    const [myList, setMyList] = useState<Array<Card>>();
     const [gender, setGender] = useState<string>();
     const countries = ['Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola', 'Anguilla', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia', 'Austria', 'Azerbaijan', 'Bangladesh', 'Barbados', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'British Indian Ocean Territory', 'British Virgin Islands', 'Brunei Darussalam', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Cape Verde', 'Cayman Islands', 'Central African Republic', 'Chad', 'Chile', 'China', 'Christmas Island', 'Cocos (Keeling) Islands', 'Colombia', 'Comoros', 'Congo-Brazzaville', 'Congo-Kinshasa', 'Cook Islands', 'Costa Rica', 'Croatia', 'Cura?ao', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador', 'El Salvador', 'Egypt', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Ethiopia', 'Falkland Islands', 'Faroe Islands', 'Federated States of Micronesia', 'Fiji', 'Finland', 'France', 'French Guiana', 'French Polynesia', 'French Southern Lands', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Gibraltar', 'Greece', 'Greenland', 'Grenada', 'Guadeloupe', 'Guam', 'Guatemala', 'Guernsey', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Heard and McDonald Islands', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iraq', 'Ireland', 'Isle of Man', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jersey', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Macedonia', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Montserrat', 'Morocco', 'Mozambique', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue', 'Norfolk Island', 'Northern Mariana Islands', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Pitcairn Islands', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'R?union', 'Romania', 'Russia', 'Rwanda', 'Saint Barth?lemy', 'Saint Helena', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Martin', 'Saint Pierre and Miquelon', 'Saint Vincent', 'Samoa', 'San Marino', 'S?o Tom? and Pr?ncipe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Sint Maarten', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Georgia', 'South Korea', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Svalbard and Jan Mayen', 'Sweden', 'Swaziland', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokelau', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Turks and Caicos Islands', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Vietnam', 'Venezuela', 'Wallis and Futuna', 'Western Sahara', 'Yemen', 'Zambia', 'Zimbabwe'];
-    async function reading() {
 
+    async function reading() {
+        let info: any = {};
         await getDoc(doc(db, "users", `${auth.currentUser?.uid}`)).then((item) => {
             if (item.exists()) {
-                setLongInfoAccount(item.data())
+                info = item.data();
             } else {
-                console.log('err')
-                reading();
+                info = reading();
             }
         })
+        return info;
+    }
+
+    async function readingMyList() {
+        let arrayAnimeProps: any = [];
+        await getDocs(query(collection(db, `mylist-${auth.currentUser?.uid}`))).then((item) => {
+            if (item.size) {
+                item.forEach((doc) => {
+                    arrayAnimeProps.push(doc.data());
+                    console.log(doc.data())
+                })
+            } 
+            else {
+                arrayAnimeProps = readingMyList();
+            }
+
+        })
+        return arrayAnimeProps;
     }
 
     useEffect(() => {
@@ -49,7 +71,8 @@ export const PageAccount = () => {
     }, [longInfoAccount])
 
     useEffect(() => {
-        reading();
+        reading().then((item) => { setLongInfoAccount(item) });
+        readingMyList().then((item) => { setMyList(item); console.log(item) })
         onAuthStateChanged(auth, (user) => {
             if (user)
                 setShortInfoAccount({
@@ -63,7 +86,6 @@ export const PageAccount = () => {
 
 
     async function UpdateInfoAccount() {
-        console.log('-------')
         const docRef = await setDoc(doc(db, `users`, `${auth.currentUser?.uid}`), {
             nickname: (document.querySelector('.create-account-info--nickname') as HTMLInputElement).value,
             country: (document.querySelector('.create-account-info--country') as HTMLSelectElement).value,
@@ -71,26 +93,26 @@ export const PageAccount = () => {
             birthday: (document.querySelector('.create-account-info--birthday') as HTMLInputElement).value,
         });
         window.location.assign('/account')
-        console.log('-------')
     }
 
     return (
         <div className='App-children'>
             <div className='account-info'>
-                {!longInfoAccount && <Loader />}
-                {shortInfoAccount && longInfoAccount && shortInfoAccount.username &&
+                {!shortInfoAccount && <Loader />}
+                {shortInfoAccount && shortInfoAccount.username &&
                     <div className='account-info--avatar'>
                         <div className='account-info--avatar-img'>{(shortInfoAccount.username)[0]}</div>
                     </div>}
-                {shortInfoAccount && longInfoAccount &&
+                {shortInfoAccount &&
                     <div className='account-info--text'>
 
                         {shortInfoAccount.username && <label htmlFor="">Name: {shortInfoAccount.username}</label>}
-                        {longInfoAccount.nickname && <label htmlFor="">Nickname: {longInfoAccount.nickname}</label>}
+                        {longInfoAccount?.nickname && <label htmlFor="">Nickname: {longInfoAccount.nickname}</label>}
                         {shortInfoAccount.email && <label htmlFor="">Email: {shortInfoAccount.email}</label>}
-                        {longInfoAccount.gender && <label htmlFor="">Gender: {longInfoAccount.gender}</label>}
-                        {longInfoAccount.country && <label htmlFor="">Country: {longInfoAccount.country}</label>}
-                        {longInfoAccount.birthday && <label htmlFor="">Birthday: {longInfoAccount.birthday}</label>}
+                        {longInfoAccount?.gender && <label htmlFor="">Gender: {longInfoAccount.gender}</label>}
+                        {longInfoAccount?.country && <label htmlFor="">Country: {longInfoAccount.country}</label>}
+                        {longInfoAccount?.birthday && <label htmlFor="">Birthday: {longInfoAccount.birthday}</label>}
+                        {!longInfoAccount && <Loader />}
                     </div>}
                 <div className='account-info--update'>
                     {shortInfoAccount?.verified && <label className='verify-true verify'>verify</label>}
@@ -121,6 +143,18 @@ export const PageAccount = () => {
                 <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'none'}>close</button>
 
             </div>
+<<<<<<< HEAD
+=======
+            <div className='animes'>
+                <label htmlFor="" className='mylist-tittle'>My list:</label>
+                {myList && myList.length > 0 && <div className='animes-div'>
+                    {myList.map(el => {
+                        return <AnimeCard name={el.name} id={el.id} image={el.image} score={el.score} genres={el.genres} year={el.realeseYear} rating={el.rating} />
+                    })}
+                </div>}
+            </div>
+
+>>>>>>> addList
         </div>
     )
 }

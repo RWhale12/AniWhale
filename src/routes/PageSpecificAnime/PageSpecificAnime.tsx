@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { setDoc, doc, getDocs, deleteDoc } from 'firebase/firestore';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { pipeline } from 'stream';
 import { Character, ReadingSpecificAnime, ReadingSpecificAnimeCharacters, ReadingSpecificAnimePicAndVid, ReadingSpecificAnimeRelations, Relation, Relations } from '../../actions/readingApi';
 import { Loader } from '../../components/Loader';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSpecificAnime } from '../../redux/slices';
-import { SpecificAnime } from '../../redux/slices/cardSlice';
 import './PageSpecificAnime.scss'
+import { db } from '../../index'
+import { collection, query, where } from "firebase/firestore";
 
 
 type PageSpecificAnimeProps = {
@@ -15,14 +17,31 @@ type PageSpecificAnimeProps = {
 }
 
 export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
+    const auth = getAuth();
 
     const selectorAnime = useAppSelector(state => state.cardSliceReduser.contentSpecificAnime);
     const dispatch = useAppDispatch();
     const [arrayCharachters, setArrayCharacters] = useState<Array<Character>>();
     const [relations, setRelations] = useState<Array<any>>();
     const [images, setImages] = useState<Array<String>>();
+    const [checkedMyList, setChekedMyList] = useState<boolean>();
+
+
+    async function searchIdMyList() {
+        const mylist = collection(db, `mylist-${auth.currentUser?.uid}`);  
+        const querySnapshot = await getDocs(query(mylist, where("id", "==", props.id))).then((item) => {
+            if(item.size)
+            setChekedMyList(true)
+            else 
+            setChekedMyList(false)
+        });
+
+    }
+
 
     useEffect(() => {
+        searchIdMyList();
+
         dispatch(fetchSpecificAnime(null));
         const timerAnime = setTimeout(() => {
 
@@ -68,6 +87,24 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
         return () => { clearTimeout(timerAnime) }
     }, []);
 
+    async function writeToDataBaseMyList() {
+        const docRef = await setDoc(doc(db, `mylist-${auth.currentUser?.uid}`, `${props.id}`), {
+            id: props.id,
+            name: selectorAnime?.tittle,
+            image: selectorAnime?.image,
+            score: selectorAnime?.score,
+            genres: selectorAnime?.genres,
+            realeseYear: selectorAnime?.realeseYear,
+            rating: selectorAnime?.rating,
+        });
+        setChekedMyList(true)
+    }
+
+    async function deleteToDataBaseMyList() {
+        await deleteDoc(doc(db,  `mylist-${auth.currentUser?.uid}`, `${props.id}`));
+        setChekedMyList(false);
+    }
+
     return (
         <div className='specific-anime'>
             {!selectorAnime && <Loader />}
@@ -75,8 +112,8 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                 <div className='specific-anime--content'>
                     <div className='specific-anime--content-children specific-anime--content-children-left'>
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
-                        {/* <button className='specific-anime--content-children-left--add-list'>add to list</button> */}
-                        {/* <iframe src={`https://www.youtube.com/embed/${selectorAnime.trailer}`} className='specific-anime--content-children-left--trailer'></iframe> */}
+                        {!checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => writeToDataBaseMyList()}>add to list</button>}
+                        {checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => deleteToDataBaseMyList()}>delete to list</button>}
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
                         <label htmlFor="" className='specific-anime--content-children-center--tittle'>{selectorAnime.tittle}</label>
@@ -102,6 +139,10 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                         <div className='specific-anime--content-children-right-param'>
                             <label htmlFor="" className='specific-anime--content-children-right-param-name'>Status:</label>
                             <label htmlFor="" className='specific-anime--content-children-right-param-content'>{selectorAnime.status}</label>
+                        </div>
+                        <div className='specific-anime--content-children-right-param'>
+                            <label htmlFor="" className='specific-anime--content-children-right-param-name'>Aired:</label>
+                            <label htmlFor="" className='specific-anime--content-children-right-param-content'>{selectorAnime.score}</label>
                         </div>
                         <div className='specific-anime--content-children-right-param'>
                             <label htmlFor="" className='specific-anime--content-children-right-param-name'>Type:</label>

@@ -208,10 +208,12 @@ export async function ReadingSpecificAnime(id: number) {
                 aired: animeInfo.data.aired.string,
                 source: animeInfo.data.source,
                 status: animeInfo.data.status,
+                score: animeInfo.data.score,
                 synopsis: animeInfo.data.synopsis,
                 studios: animeInfo.data.studios[0].name,
                 producers: animeInfo.data.producers.map((el: any) => el.name),
                 genres: animeInfo.data.genres.map((el: any) => new Object({ name: el.name, id: el.mal_id })),
+                realeseYear: animeInfo.data.aired.prop.from.year,
             }
             return anime;
         };
