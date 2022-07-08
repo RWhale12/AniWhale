@@ -26,6 +26,8 @@ export type SpecificAnime = {
     status: string;
     synopsis: string;
     studios: string;
+    score: string;
+    realeseYear: string,
     producers: [];
     genres: [];
 }

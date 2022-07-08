@@ -1,3 +1,5 @@
+import { getAuth } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSpecificAnime } from '../../redux/slices';
 import { SpecificAnime } from '../../redux/slices/cardSlice';
 import './PageSpecificAnime.scss'
+import { db } from '../../index'
 
 
 type PageSpecificAnimeProps = {
@@ -15,6 +18,7 @@ type PageSpecificAnimeProps = {
 }
 
 export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
+    const auth = getAuth();
 
     const selectorAnime = useAppSelector(state => state.cardSliceReduser.contentSpecificAnime);
     const dispatch = useAppDispatch();
@@ -68,6 +72,18 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
         return () => { clearTimeout(timerAnime) }
     }, []);
 
+    async function writeToDataBaseMyList() {
+        const docRef = await setDoc(doc(db, `mylist-${auth.currentUser?.uid}`, `${props.id}`), {
+            id: props.id,
+            name: selectorAnime?.tittle,
+            image: selectorAnime?.image,
+            score: selectorAnime?.score,
+            genres: selectorAnime?.genres,
+            year: selectorAnime?.realeseYear,
+            rating: selectorAnime?.rating,
+        });
+    }
+
     return (
         <div className='specific-anime'>
             {!selectorAnime && <Loader />}
@@ -75,8 +91,8 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                 <div className='specific-anime--content'>
                     <div className='specific-anime--content-children specific-anime--content-children-left'>
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
-                        {/* <button className='specific-anime--content-children-left--add-list'>add to list</button> */}
-                        {/* <iframe src={`https://www.youtube.com/embed/${selectorAnime.trailer}`} className='specific-anime--content-children-left--trailer'></iframe> */}
+                        <button className='specific-anime--content-children-left--add-list' onClick={() => writeToDataBaseMyList()}>add to list</button>
+
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
                         <label htmlFor="" className='specific-anime--content-children-center--tittle'>{selectorAnime.tittle}</label>
@@ -102,6 +118,10 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                         <div className='specific-anime--content-children-right-param'>
                             <label htmlFor="" className='specific-anime--content-children-right-param-name'>Status:</label>
                             <label htmlFor="" className='specific-anime--content-children-right-param-content'>{selectorAnime.status}</label>
+                        </div>
+                        <div className='specific-anime--content-children-right-param'>
+                            <label htmlFor="" className='specific-anime--content-children-right-param-name'>Aired:</label>
+                            <label htmlFor="" className='specific-anime--content-children-right-param-content'>{selectorAnime.score}</label>
                         </div>
                         <div className='specific-anime--content-children-right-param'>
                             <label htmlFor="" className='specific-anime--content-children-right-param-name'>Type:</label>
