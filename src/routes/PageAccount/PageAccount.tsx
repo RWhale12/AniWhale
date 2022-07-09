@@ -90,8 +90,13 @@ export const PageAccount = () => {
         window.location.assign('/account')
     }
 
+    function visibleBlock(vis: string, consition: string){
+        (document.querySelector(`.bg-black`) as HTMLDivElement).style.display = consition;
+        (document.querySelector(`.create-account-${vis}`) as HTMLDivElement).style.display = consition;
+    }
     return (
         <div className='App-children'>
+            <div className='bg-black'></div>
             <div className='account-info'>
                 {!shortInfoAccount && <Loader />}
                 {shortInfoAccount && shortInfoAccount.username &&
@@ -110,13 +115,16 @@ export const PageAccount = () => {
                         {!longInfoAccount && <Loader />}
                     </div>}
                 <div className='account-info--update'>
+                    
                     {shortInfoAccount?.verified && <label className='verify-true verify'>verify</label>}
                     {!shortInfoAccount?.verified && <label className='verify-false verify'>noverify</label>}
-                    <button onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'flex'}>update</button>
+                    <button className='account-info--update--button' onClick={() => visibleBlock('info', 'flex')}>Setting Account</button>
+                    <button className='account-info--update--button' onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'flex'}>Reset Password</button>
                 </div>
 
             </div>
             <div className='create-account-info'>
+                
                 <div>Nickname:<input type="textfield" className='create-account-info--nickname' placeholder={longInfoAccount && longInfoAccount.nickname}></input></div>
                 <div>Gender:
                     <input type='radio' name='gender' value='Female' onClick={() => setGender('Female')} className='create-account-info--gender-Female' checked={gender === 'Female'} />
@@ -135,7 +143,7 @@ export const PageAccount = () => {
                     </select>
                 </div>
                 <div>Bitrhday:<input type="date" className='create-account-info--birthday' /></div>
-                <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'none'}>close</button>
+                <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => visibleBlock('info', 'none')}>close</button>
 
             </div>
             <div className='account-info--mylist animes'>

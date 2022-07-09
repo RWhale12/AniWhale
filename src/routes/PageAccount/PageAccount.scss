@@ -46,8 +46,24 @@
     }
 
     &--update{
+        padding-right: 50px;
         display: flex;
         flex-direction: column;
+        align-items: flex-end; 
+
+
+        &--button{
+            width: 150px;
+            height: 40px;
+            margin: 10px 0;
+            background-color: rgba($color: blue, $alpha: 0.8);
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+
     }
 }
 
@@ -57,12 +73,14 @@
     width: 30%;
     height: 400px;
     background-color: white;
-    box-shadow: 0 0 1000px black;
+    box-shadow: 1px 1px 1000px black;
     display: none;
     flex-direction: column;
     position: absolute;
+    z-index: 10;
     justify-content: center;
     align-items: center;
+
 
     & div{
         width: 60%;
@@ -94,4 +112,16 @@
     font-weight: 800;
     margin: 40px 0 0 0;  
     padding-left: 60px;
+}
+
+.bg-black{
+    display: none;
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100vh;
+    margin-top: -60px;
+    background: rgba($color: #000000, $alpha: 0.9);
+    box-shadow: 0 0 1000px black;
+    
 }
