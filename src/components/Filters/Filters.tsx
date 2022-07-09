@@ -26,16 +26,19 @@ export const Filters = (props: FilterProps) => {
     }, [])
 
     function WritingFilterAnime() {
-        let urlYear = '', urlGenres = '';
+        let urlYear = '', urlGenres = '', urlType = '';
         const year = (document.querySelector('.filters-dropdown-year') as HTMLSelectElement).value;
         const genres = (document.querySelector('.filters-dropdown-genres') as HTMLSelectElement).value;
+        const type = (document.querySelector('.filters-dropdown-type') as HTMLSelectElement).value;
 
         if(year != '')
         urlYear = `&start_date=${year}`;
         if(genres != '')
         urlGenres = `&genres=${genres}`
+        if(type != '')
+        urlType = `&type=${type}`
         
-        const url = urlYear + urlGenres;
+        const url = urlYear + urlGenres + urlType;
         props.updateData(url);
     }
 
@@ -52,6 +55,15 @@ export const Filters = (props: FilterProps) => {
                 {arrayGenres && arrayGenres.map((genres, index) => {
                     return <option value={genres.id}>{genres.name}</option>
                 })}
+            </select>
+            <select name="" className='filters-dropdown filters-dropdown-type'>
+                <option value="">Type</option>
+                <option value="tv">tv</option>
+                <option value="movie">movie</option>
+                <option value="ona">ona</option>
+                <option value="music">music</option>
+                <option value="ova">ova</option>
+                <option value="special">special</option>
             </select>
             <button onClick={() => { WritingFilterAnime() }} className='filters-button'>Go Filter</button>
         </div>

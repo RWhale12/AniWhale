@@ -4,13 +4,8 @@ import './PageAccount.scss'
 import { Account } from '../../components/Header/Header'
 import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs } from "firebase/firestore";
 import { Loader } from '../../components/Loader';
-<<<<<<< HEAD
-import { Footer } from '../../components/Footer';
-=======
-import { Card } from '../../redux/slices/cardSlice';
 import { AnimeCard } from '../../components/AnimeCard';
->>>>>>> addList
-// import { db } from '../../index'
+import { Card } from '../../redux/slices/cardSlice';
 
 
 type AccountInfoDB = {
@@ -143,9 +138,7 @@ export const PageAccount = () => {
                 <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'none'}>close</button>
 
             </div>
-<<<<<<< HEAD
-=======
-            <div className='animes'>
+            <div className='account-info--mylist animes'>
                 <label htmlFor="" className='mylist-tittle'>My list:</label>
                 {myList && myList.length > 0 && <div className='animes-div'>
                     {myList.map(el => {
@@ -154,7 +147,6 @@ export const PageAccount = () => {
                 </div>}
             </div>
 
->>>>>>> addList
         </div>
     )
 }
