@@ -67,13 +67,12 @@
     }
 }
 
-.create-account-info {
+.create-account {
     
-    margin-top: 200px;
+    margin-top: 100px;
     width: 30%;
-    height: 400px;
-    background-color: white;
-    box-shadow: 1px 1px 1000px black;
+    height: 550px;
+    background-color: rgba($color: white, $alpha: 0.9);
     display: none;
     flex-direction: column;
     position: absolute;
@@ -81,18 +80,49 @@
     justify-content: center;
     align-items: center;
 
+    &-button{
+        width: 40%;
+        height: 40px;
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        border: none;
+        margin: 10px 0;
+        background-color: rgba($color: blue, $alpha: 0.8);
 
-    & div{
-        width: 60%;
-        margin: 15px 0;
+        &:hover{
+            transform: scale(1.07);
+        }
     }
 
-    & button{
+    &-label{
         width: 40%;
-        height: 30px;
+        text-align: left;
+    }
+
+    &-input{
+        border: none;
+        width: 40%;
+        height: 50px;
+        padding: 0 15px;
+        outline: none;
+        background: rgb(198 198 198);
         margin: 10px 0;
     }
+
+    &-block{
+        width: 40%;
+        height: 50px;
+        padding: 0 15px;
+        background: rgb(198 198 198);
+        margin: 10px 0;
+
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 }
+
 
 .verify{
     font-size: 20px;

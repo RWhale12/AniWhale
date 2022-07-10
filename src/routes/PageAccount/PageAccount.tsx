@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { EmailAuthProvider, getAuth, onAuthStateChanged, reauthenticateWithCredential, signOut, updatePassword } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import './PageAccount.scss'
 import { Account } from '../../components/Header/Header'
@@ -6,6 +6,7 @@ import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs } from "f
 import { Loader } from '../../components/Loader';
 import { AnimeCard } from '../../components/AnimeCard';
 import { Card } from '../../redux/slices/cardSlice';
+import validator from 'validator';
 
 
 type AccountInfoDB = {
@@ -44,7 +45,7 @@ export const PageAccount = () => {
                     arrayAnimeProps.push(doc.data());
                     console.log(doc.data())
                 })
-            } 
+            }
             else {
                 arrayAnimeProps = readingMyList();
             }
@@ -90,7 +91,31 @@ export const PageAccount = () => {
         window.location.assign('/account')
     }
 
-    function visibleBlock(vis: string, consition: string){
+    async function resetPass() {
+
+        const newpass = (document.querySelector('.create-account-newpass') as HTMLInputElement).value;
+        const valPass = validator.isStrongPassword(newpass, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 });
+
+        if (valPass && auth.currentUser && auth.currentUser.email) {
+            try{const credential = EmailAuthProvider.credential(
+                auth.currentUser.email,
+                (document.querySelector('.create-account-oldpass') as HTMLInputElement).value
+            )
+            const result = await reauthenticateWithCredential(
+                auth.currentUser,
+                credential
+            )
+            await updatePassword(auth.currentUser, newpass).then(() => {
+                signOut(auth);
+                window.location.assign('/sing');
+            })}
+            catch{alert('Old password is incorrect')}
+        } else {
+            alert('Password is too easy')
+        }
+    }
+
+    function visibleBlock(vis: string, consition: string) {
         (document.querySelector(`.bg-black`) as HTMLDivElement).style.display = consition;
         (document.querySelector(`.create-account-${vis}`) as HTMLDivElement).style.display = consition;
     }
@@ -115,36 +140,46 @@ export const PageAccount = () => {
                         {!longInfoAccount && <Loader />}
                     </div>}
                 <div className='account-info--update'>
-                    
+
                     {shortInfoAccount?.verified && <label className='verify-true verify'>verify</label>}
                     {!shortInfoAccount?.verified && <label className='verify-false verify'>noverify</label>}
                     <button className='account-info--update--button' onClick={() => visibleBlock('info', 'flex')}>Setting Account</button>
-                    <button className='account-info--update--button' onClick={() => (document.querySelector('.create-account-info') as HTMLDivElement).style.display = 'flex'}>Reset Password</button>
+                    <button className='account-info--update--button' onClick={() => visibleBlock('reset', 'flex')}>Reset Password</button>
                 </div>
 
             </div>
-            <div className='create-account-info'>
-                
-                <div>Nickname:<input type="textfield" className='create-account-info--nickname' placeholder={longInfoAccount && longInfoAccount.nickname}></input></div>
-                <div>Gender:
-                    <input type='radio' name='gender' value='Female' onClick={() => setGender('Female')} className='create-account-info--gender-Female' checked={gender === 'Female'} />
+            <div className='create-account-info create-account'>
+                <label htmlFor="" className='create-account-label'>Nickname:</label>
+                <input type="textfield" className='create-account-info--nickname create-account-input' placeholder={longInfoAccount && longInfoAccount.nickname}></input>
+                <label htmlFor="" className='create-account-label'>Gender:</label>
+                <div className='create-account-block'>
+                    <input type='radio' name='gender' value='Female' onClick={() => setGender('Female')} className='create-account-info--gender-Female create' checked={gender === 'Female'} />
                     <label>Female</label>
                     <input type='radio' name='gender' value='Male' onClick={() => setGender('Male')} className='create-account-info--gender-Male' checked={gender === 'Male'}>
                     </input>
                     <label>Male</label>
                 </div>
-                <div>Counry:
-                    <select className='create-account-info--country'>
-                        {countries &&
-                            countries.map((item) => {
-                                return <option>{item}</option>
-                            })
-                        }
-                    </select>
-                </div>
-                <div>Bitrhday:<input type="date" className='create-account-info--birthday' /></div>
-                <button onClick={() => UpdateInfoAccount()}>update</button><button onClick={() => visibleBlock('info', 'none')}>close</button>
+                <label htmlFor="" className='create-account-label'>Country:</label>
+                <select className='create-account-info--country create-account-input' >
+                    {countries &&
+                        countries.map((item) => {
+                            return <option>{item}</option>
+                        })
+                    }
+                </select>
+                <label htmlFor="" className='create-account-label'>Bithday:</label>
+                <input type="date" className='create-account-info--birthday create-account-input' />
+                <button onClick={() => UpdateInfoAccount()} className='create-account-button'>Update Account</button>
+                <button onClick={() => visibleBlock('info', 'none')} className='create-account-button'>Close</button>
 
+            </div>
+            <div className='create-account-reset create-account'>
+                <label htmlFor="" className='create-account-label'>Old password:</label>
+                <input className='create-account-input create-account-oldpass' type='password' />
+                <label htmlFor="" className='create-account-label'>New password:</label>
+                <input className='create-account-input create-account-newpass' type='password' />
+                <button onClick={() => resetPass()} className='create-account-button'>Reset Password</button>
+                <button onClick={() => visibleBlock('reset', 'none')} className='create-account-button'>Close</button>
             </div>
             <div className='account-info--mylist animes'>
                 <label htmlFor="" className='mylist-tittle'>My list:</label>
@@ -155,6 +190,6 @@ export const PageAccount = () => {
                 </div>}
             </div>
 
-        </div>
+        </div >
     )
 }
