@@ -1,10 +1,10 @@
 import './SingInAndUp.scss'
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SassColor } from 'sass';
 import validator from 'validator'
 import { getDatabase, set, ref } from "firebase/database";
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, collection, addDoc } from 'firebase/firestore';
 import { db } from '../../index'
 import { access } from 'fs';
 
@@ -42,8 +42,6 @@ export const SingUp = (props: SingUnProps) => {
                     if (valEmail) {
                         if (valPass) {
                             setUserData({ email: email, password: pass });
-                            isReg(name);
-                            alert('Account has been successfully registered');
                         }
                         else { alert('Pass Error') }
                     }
@@ -60,20 +58,17 @@ export const SingUp = (props: SingUnProps) => {
         }
     }
 
+    useEffect(() => {
+        isReg((document.querySelector('.sing-input--regestration-name') as HTMLInputElement).value);
+    }, [userData])
+
     async function isReg(name: string) {
 
         if (userData) {
-            await createUserWithEmailAndPassword(auth, userData.email, userData.password).then((userCredential) => {
-                updateProfile(userCredential.user, {
-                    displayName: name, photoURL: "https://example.com/jane-q-user/profile.jpg"
-                });
-                sendEmailVerification(userCredential.user);
-                console.log('yes reg')
-            })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                });
+            await createUserWithEmailAndPassword(auth, userData.email, userData.password).then(() => {
+                if (auth.currentUser)
+                    updateProfile(auth.currentUser, { displayName: name });
+            });
 
             const docRef = await setDoc(doc(db, `users`, `${auth.currentUser?.uid}`), {
                 nickname: '',
@@ -81,6 +76,7 @@ export const SingUp = (props: SingUnProps) => {
                 gender: '',
                 birthday: '',
             });
+            window.location.assign('/');
         }
     }
 

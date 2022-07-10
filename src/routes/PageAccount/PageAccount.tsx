@@ -120,7 +120,6 @@ export const PageAccount = () => {
     async function deleteAccount() {
         if (auth.currentUser) {
             await deleteDoc(doc(db, `users`, `${auth.currentUser?.uid}`));
-            await deleteDoc(doc(db, `mylist-${auth.currentUser.uid}`));
             deleteUser(auth.currentUser);
             window.location.assign('/');
         }

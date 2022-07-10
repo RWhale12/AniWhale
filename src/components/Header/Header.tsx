@@ -68,7 +68,7 @@ export const Header = (props: HeaderProps) => {
                                     <label className='header-auth--name'>{user.username}</label>
                                     {user.verify && <label className='verify-true'>verify</label>}
                                     {!user.verify && <label className='verify-false'>noverify</label>}
-                                    <button className='header-auth--btn-out' onClick={() => { signOut(auth); setVisible(2); }}>out</button>
+                                    
                                 </div>
 
                                 <div className='header-auth--email'>{user.email}</div>
