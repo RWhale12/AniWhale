@@ -1,8 +1,8 @@
-import { EmailAuthProvider, getAuth, onAuthStateChanged, reauthenticateWithCredential, signOut, updatePassword } from 'firebase/auth';
+import { deleteUser, EmailAuthProvider, getAuth, onAuthStateChanged, reauthenticateWithCredential, signOut, updatePassword } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import './PageAccount.scss'
 import { Account } from '../../components/Header/Header'
-import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs } from "firebase/firestore";
+import { setDoc, collection, getFirestore, query, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { Loader } from '../../components/Loader';
 import { AnimeCard } from '../../components/AnimeCard';
 import { Card } from '../../redux/slices/cardSlice';
@@ -97,21 +97,32 @@ export const PageAccount = () => {
         const valPass = validator.isStrongPassword(newpass, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 });
 
         if (valPass && auth.currentUser && auth.currentUser.email) {
-            try{const credential = EmailAuthProvider.credential(
-                auth.currentUser.email,
-                (document.querySelector('.create-account-oldpass') as HTMLInputElement).value
-            )
-            const result = await reauthenticateWithCredential(
-                auth.currentUser,
-                credential
-            )
-            await updatePassword(auth.currentUser, newpass).then(() => {
-                signOut(auth);
-                window.location.assign('/sing');
-            })}
-            catch{alert('Old password is incorrect')}
+            try {
+                const credential = EmailAuthProvider.credential(
+                    auth.currentUser.email,
+                    (document.querySelector('.create-account-oldpass') as HTMLInputElement).value
+                )
+                const result = await reauthenticateWithCredential(
+                    auth.currentUser,
+                    credential
+                )
+                await updatePassword(auth.currentUser, newpass).then(() => {
+                    signOut(auth);
+                    window.location.assign('/sing');
+                })
+            }
+            catch { alert('Old password is incorrect') }
         } else {
             alert('Password is too easy')
+        }
+    }
+
+    async function deleteAccount() {
+        if (auth.currentUser) {
+            await deleteDoc(doc(db, `users`, `${auth.currentUser?.uid}`));
+            await deleteDoc(doc(db, `mylist-${auth.currentUser.uid}`));
+            deleteUser(auth.currentUser);
+            window.location.assign('/');
         }
     }
 
@@ -145,6 +156,7 @@ export const PageAccount = () => {
                     {!shortInfoAccount?.verified && <label className='verify-false verify'>noverify</label>}
                     <button className='account-info--update--button' onClick={() => visibleBlock('info', 'flex')}>Setting Account</button>
                     <button className='account-info--update--button' onClick={() => visibleBlock('reset', 'flex')}>Reset Password</button>
+                    <button className='account-info--update--button account-info--update--button--delete' onClick={() => visibleBlock('delete', 'flex')}>Delete Account</button>
                 </div>
 
             </div>
@@ -180,6 +192,11 @@ export const PageAccount = () => {
                 <input className='create-account-input create-account-newpass' type='password' />
                 <button onClick={() => resetPass()} className='create-account-button'>Reset Password</button>
                 <button onClick={() => visibleBlock('reset', 'none')} className='create-account-button'>Close</button>
+            </div>
+            <div className='create-account-delete create-account'>
+                <label htmlFor="" className='create-account-label'>Do you want to delete your account?</label>
+                <button onClick={() => deleteAccount()} className='create-account-button'>Delete</button>
+                <button onClick={() => visibleBlock('close', 'none')} className='create-account-button'>Close</button>
             </div>
             <div className='account-info--mylist animes'>
                 <label htmlFor="" className='mylist-tittle'>My list:</label>

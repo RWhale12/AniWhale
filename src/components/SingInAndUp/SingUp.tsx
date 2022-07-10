@@ -6,6 +6,7 @@ import validator from 'validator'
 import { getDatabase, set, ref } from "firebase/database";
 import { setDoc, doc } from 'firebase/firestore';
 import { db } from '../../index'
+import { access } from 'fs';
 
 
 
@@ -38,13 +39,11 @@ export const SingUp = (props: SingUnProps) => {
         try {
             if (pass === conPass && name && email && pass && conPass) {
                 if (valName) {
-                    alert('Name ok');
                     if (valEmail) {
-                        alert('Email ok');
                         if (valPass) {
-                            alert('Pass ok')
                             setUserData({ email: email, password: pass });
                             isReg(name);
+                            alert('Account has been successfully registered');
                         }
                         else { alert('Pass Error') }
                     }
@@ -62,13 +61,14 @@ export const SingUp = (props: SingUnProps) => {
     }
 
     async function isReg(name: string) {
+
         if (userData) {
             await createUserWithEmailAndPassword(auth, userData.email, userData.password).then((userCredential) => {
                 updateProfile(userCredential.user, {
                     displayName: name, photoURL: "https://example.com/jane-q-user/profile.jpg"
                 });
                 sendEmailVerification(userCredential.user);
-
+                console.log('yes reg')
             })
                 .catch((error) => {
                     const errorCode = error.code;
