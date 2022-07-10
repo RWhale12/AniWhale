@@ -1,0 +1,14 @@
+.episodes {
+    width: 65%;
+    padding: 50px 0;
+    background-color: rgba($color: white, $alpha: 0.4);
+    box-shadow: 0 0 10px gray;
+    animation: ani 1s forwards;
+
+    &--div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 40px;
+        padding: 0 30px;
+    }
+}

@@ -21,6 +21,13 @@ export type Relation = {
     name: string,
 }
 
+export type Episodes = {
+    id: number;
+    title: string;
+    jTitle: string;
+    url: string;
+}
+
 
 
 
@@ -57,6 +64,40 @@ export async function ReadingAnime(page: number, limit: number, parametrs: strin
             } else if (limit === 15) {
                 return massThisPageAnime;
             }
+        }
+
+
+
+    } catch (e) {
+        console.log(`Error ${e}`)
+    }
+}
+
+export async function ReadingAnimeEpisoder(page: number, id: number) {
+    try {
+        const massAnimeEpisodes: Episodes[] = [];
+        const response = await fetch(`https://api.jikan.moe/v4/anime/${id}/episodes?page=${page}`, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+
+        const user = await response.json();
+
+        if (response.ok || response.status === 200) {
+            user.data.map((anime: any) => {
+                massAnimeEpisodes.push({
+                    id: anime.mal_id,
+                    title: anime.title,
+                    jTitle: anime.title_japanese,
+                    url: anime.url
+
+                })
+
+            });
+
+                return [massAnimeEpisodes, user.pagination.last_visible_page];
         }
 
 

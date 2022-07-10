@@ -1,3 +1,4 @@
+import { InferencePriority } from 'typescript';
 import { useAppSelector } from '../../redux/hooks';
 import './ButtonPages.scss'
 
@@ -6,10 +7,12 @@ type ButtonPagesProps ={
     updatePage: (value: number) => void;
     top?: boolean;
     new?: boolean;
+    countPages?: number;
 }
 
 export const ButtonPages = (props: ButtonPagesProps) => {
     let selectorPages = useAppSelector(state => state.cardSliceReduser.countPages);
+    if(props.countPages) selectorPages = props.countPages;
     if(props.top) selectorPages = 4;
     if(props.new) selectorPages = 10;
 

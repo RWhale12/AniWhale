@@ -118,6 +118,7 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
                         {!checkedMyList && <button className='specific-anime--content-children-left--btn' onClick={() => writeToDataBaseMyList()}>Add to list</button>}
                         {checkedMyList && <button className='specific-anime--content-children-left--btn' onClick={() => deleteToDataBaseMyList()}>Delete to list</button>}
+                        <button className='specific-anime--content-children-left--btn' onClick={() => window.location.assign(`/anime/${props.id}/episodes`)}>Watch</button>
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
                         <label htmlFor="" className='specific-anime--content-children-center--tittle'>{selectorAnime.tittle}</label>

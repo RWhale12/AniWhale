@@ -38,8 +38,8 @@
                     font-size: 18px;
                     color: white;
                     background-color: rgba($color: blue, $alpha: 0.8);
-                    box-shadow: 0 0 5px black;
-
+                    box-shadow: 3px 3px 15px gray;
+                    margin-bottom: 15px;
                     transition: transform .2s;
 
                     &:hover{
