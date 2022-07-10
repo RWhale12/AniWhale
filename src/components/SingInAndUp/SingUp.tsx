@@ -66,8 +66,10 @@ export const SingUp = (props: SingUnProps) => {
 
         if (userData) {
             await createUserWithEmailAndPassword(auth, userData.email, userData.password).then(() => {
-                if (auth.currentUser)
+                if (auth.currentUser){
                     updateProfile(auth.currentUser, { displayName: name });
+                    sendEmailVerification(auth.currentUser);
+                }
             });
 
             const docRef = await setDoc(doc(db, `users`, `${auth.currentUser?.uid}`), {

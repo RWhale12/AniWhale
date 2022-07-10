@@ -28,12 +28,12 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
 
 
     async function searchIdMyList() {
-        const mylist = collection(db, `mylist-${auth.currentUser?.uid}`);  
+        const mylist = collection(db, `mylist-${auth.currentUser?.uid}`);
         const querySnapshot = await getDocs(query(mylist, where("id", "==", props.id))).then((item) => {
-            if(item.size)
-            setChekedMyList(true)
-            else 
-            setChekedMyList(false)
+            if (item.size)
+                setChekedMyList(true)
+            else
+                setChekedMyList(false)
         });
 
     }
@@ -88,20 +88,24 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
     }, []);
 
     async function writeToDataBaseMyList() {
-        const docRef = await setDoc(doc(db, `mylist-${auth.currentUser?.uid}`, `${props.id}`), {
-            id: props.id,
-            name: selectorAnime?.tittle,
-            image: selectorAnime?.image,
-            score: selectorAnime?.score,
-            genres: selectorAnime?.genres,
-            realeseYear: selectorAnime?.realeseYear,
-            rating: selectorAnime?.rating,
-        });
-        setChekedMyList(true)
+        if (auth.currentUser?.emailVerified) {
+            const docRef = await setDoc(doc(db, `mylist-${auth.currentUser?.uid}`, `${props.id}`), {
+                id: props.id,
+                name: selectorAnime?.tittle,
+                image: selectorAnime?.image,
+                score: selectorAnime?.score,
+                genres: selectorAnime?.genres,
+                realeseYear: selectorAnime?.realeseYear,
+                rating: selectorAnime?.rating,
+            });
+            setChekedMyList(true)
+        } else {
+            alert('Please verify your account')
+        }
     }
 
     async function deleteToDataBaseMyList() {
-        await deleteDoc(doc(db,  `mylist-${auth.currentUser?.uid}`, `${props.id}`));
+        await deleteDoc(doc(db, `mylist-${auth.currentUser?.uid}`, `${props.id}`));
         setChekedMyList(false);
     }
 
@@ -112,8 +116,8 @@ export const PageSpecificAnime = (props: PageSpecificAnimeProps) => {
                 <div className='specific-anime--content'>
                     <div className='specific-anime--content-children specific-anime--content-children-left'>
                         <img src={selectorAnime.image} alt="" className='specific-anime--content-children-left--img' />
-                        {!checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => writeToDataBaseMyList()}>add to list</button>}
-                        {checkedMyList && <button className='specific-anime--content-children-left--add-list' onClick={() => deleteToDataBaseMyList()}>delete to list</button>}
+                        {!checkedMyList && <button className='specific-anime--content-children-left--btn' onClick={() => writeToDataBaseMyList()}>Add to list</button>}
+                        {checkedMyList && <button className='specific-anime--content-children-left--btn' onClick={() => deleteToDataBaseMyList()}>Delete to list</button>}
                     </div>
                     <div className='specific-anime--content-children specific-anime--content-children-center'>
                         <label htmlFor="" className='specific-anime--content-children-center--tittle'>{selectorAnime.tittle}</label>

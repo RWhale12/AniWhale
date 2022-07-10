@@ -67,6 +67,7 @@ export const PageAccount = () => {
     }, [longInfoAccount])
 
     useEffect(() => {
+        if(!auth.currentUser) window.location.assign('/')
         reading().then((item) => { setLongInfoAccount(item) });
         readingMyList().then((item) => { setMyList(item); console.log(item) })
         onAuthStateChanged(auth, (user) => {
@@ -149,14 +150,17 @@ export const PageAccount = () => {
                         {longInfoAccount?.birthday && <label htmlFor="">Birthday: {longInfoAccount.birthday}</label>}
                         {!longInfoAccount && <Loader />}
                     </div>}
-                <div className='account-info--update'>
+                {shortInfoAccount &&
+                    <div className='account-info--update'>
 
-                    {shortInfoAccount?.verified && <label className='verify-true verify'>verify</label>}
-                    {!shortInfoAccount?.verified && <label className='verify-false verify'>noverify</label>}
-                    <button className='account-info--update--button' onClick={() => visibleBlock('info', 'flex')}>Setting Account</button>
-                    <button className='account-info--update--button' onClick={() => visibleBlock('reset', 'flex')}>Reset Password</button>
-                    <button className='account-info--update--button account-info--update--button--delete' onClick={() => visibleBlock('delete', 'flex')}>Delete Account</button>
-                </div>
+                        {shortInfoAccount?.verified && <label className='verify-true verify'>verify</label>}
+                        {!shortInfoAccount?.verified && <label className='verify-false verify'>noverify</label>}
+                        <button className='account-info--update--button' onClick={() => visibleBlock('info', 'flex')}>Setting Account</button>
+                        <button className='account-info--update--button' onClick={() => visibleBlock('reset', 'flex')}>Reset Password</button>
+                        <button className='account-info--update--button' onClick={() => { signOut(auth); window.location.assign('/') }}>Log out</button>
+                        <button className='account-info--update--button account-info--update--button--delete' onClick={() => visibleBlock('delete', 'flex')}>Delete Account</button>
+
+                    </div>}
 
             </div>
             <div className='create-account-info create-account'>
@@ -197,6 +201,7 @@ export const PageAccount = () => {
                 <button onClick={() => deleteAccount()} className='create-account-button'>Delete</button>
                 <button onClick={() => visibleBlock('close', 'none')} className='create-account-button'>Close</button>
             </div>
+            {shortInfoAccount &&
             <div className='account-info--mylist animes'>
                 <label htmlFor="" className='mylist-tittle'>My list:</label>
                 {myList && myList.length > 0 && <div className='animes-div'>
@@ -204,7 +209,9 @@ export const PageAccount = () => {
                         return <AnimeCard name={el.name} id={el.id} image={el.image} score={el.score} genres={el.genres} year={el.realeseYear} rating={el.rating} />
                     })}
                 </div>}
-            </div>
+                {!myList &&
+                   <label className='mylist-tittle mylist-tittle--placeholder'>There's nothing here yet</label>}
+            </div>}
 
         </div >
     )

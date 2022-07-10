@@ -32,15 +32,19 @@
                     margin-bottom: 23px;
                 }
 
-                &--trailer {
-                    transform-origin: left bottom;
-                    transition: transform .2s;
-                }
+                &--btn{
+                    border: none;
+                    height: 50px;
+                    font-size: 18px;
+                    color: white;
+                    background-color: rgba($color: blue, $alpha: 0.8);
+                    box-shadow: 0 0 5px black;
 
-                &--trailer:hover {
-                    position: relative;
-                    transform: scale(3.3);
-                    border: 5px solid rgba($color: blue, $alpha: 0.8);
+                    transition: transform .2s;
+
+                    &:hover{
+                        transform: scale(1.07);
+                    }
                 }
             }
 
