@@ -67,7 +67,7 @@ export const PageAccount = () => {
     }, [longInfoAccount])
 
     useEffect(() => {
-        if(!auth.currentUser) window.location.assign('/')
+
         reading().then((item) => { setLongInfoAccount(item) });
         readingMyList().then((item) => { setMyList(item); console.log(item) })
         onAuthStateChanged(auth, (user) => {
@@ -79,6 +79,7 @@ export const PageAccount = () => {
                     verified: user.emailVerified,
                 })
         });
+        if(!auth) window.location.assign('/')
     }, []);
 
 
