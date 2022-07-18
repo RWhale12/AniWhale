@@ -67,7 +67,6 @@ export const PageAccount = () => {
     }, [longInfoAccount])
 
     useEffect(() => {
-
         reading().then((item) => { setLongInfoAccount(item) });
         readingMyList().then((item) => { setMyList(item); console.log(item) })
         onAuthStateChanged(auth, (user) => {
@@ -79,7 +78,6 @@ export const PageAccount = () => {
                     verified: user.emailVerified,
                 })
         });
-        if(!auth) window.location.assign('/')
     }, []);
 
 
@@ -123,8 +121,12 @@ export const PageAccount = () => {
         if (auth.currentUser) {
             await deleteDoc(doc(db, `users`, `${auth.currentUser?.uid}`));
             deleteUser(auth.currentUser);
-            window.location.assign('/');
+            
+            setTimeout(() => {
+                window.location.assign('/');
+            }, 2000);
         }
+
     }
 
     function visibleBlock(vis: string, consition: string) {

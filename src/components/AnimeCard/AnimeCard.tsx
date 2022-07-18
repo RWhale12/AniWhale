@@ -15,9 +15,8 @@ type CardProps = {
 
 export const AnimeCard = (props: CardProps) => {
     return (
-        <Link to={`/anime/${props.id}`}>
+        // <Link to={`/anime/${props.id}`}>
             <div className='anime-card' >
-                <div className='div-info'></div>
                 <img className='anime-card__image' src={props.image} alt="" ></img>
                 <div className='anime-card__image-hover'>
                     <div className='anime-card__image-hover--top-div'>
@@ -39,6 +38,6 @@ export const AnimeCard = (props: CardProps) => {
                     {!props.rating && <div className='anime-card__image-hover--rating'>no score</div>}
                 </div>
             </div>
-        </Link>
+        // </Link>
     )
 }
