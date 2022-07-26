@@ -9,3 +9,6 @@
 - anime pages with specific filters
 - filters, pagination and search
 - page with a specific anime, with series
+
+[Unreleased]: https://aniwhale.netlify.app
+[1.0.0]: https://aniwhale.netlify.app
